@@ -1,0 +1,21 @@
+stages:
+  create_dataset:
+    cmd: jupyter nbconvert create_dataset.ipynb --to python
+    deps:
+    - data
+    - create_dataset.ipynb
+    outs:
+    - create_dataset.py
+  create_augmented_dataset:
+    cmd: jupyter nbconvert create_augmented_dataset.ipynb --to python
+    deps:
+    - data
+    - create_augmented_dataset.ipynb
+    outs:
+    - create_augmented_dataset.py
+  train_model:
+    cmd: jupyter nbconvert train_model.ipynb --to python
+    deps:
+    - train_model.ipynb
+    outs:
+    - train_model.py
