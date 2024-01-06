@@ -11,7 +11,7 @@ IMAGE_SIZE = (256, 256)
 IMAGE_KERNEL_SIZE = (256, 256, 1)
 CLASSES_COUNT = len(VARIANTS)
 BATCH_SIZE = 8
-EPOCH_СOUNT = 5
+EPOCH_СOUNT = 10
 
 dvc_params = dvc.api.params_show()
 warnings.filterwarnings('ignore')
