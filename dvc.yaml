@@ -1,21 +1,17 @@
 stages:
   create_dataset:
-    cmd: jupyter nbconvert create_dataset.ipynb --to python
+    cmd: python create_dataset.py
     deps:
-    - data
-    - create_dataset.ipynb
-    outs:
+    - Kaggle_ds
     - create_dataset.py
-  create_augmented_dataset:
-    cmd: jupyter nbconvert create_augmented_dataset.ipynb --to python
-    deps:
-    - data
-    - create_augmented_dataset.ipynb
+    params:
+    - with_augmentation
     outs:
-    - create_augmented_dataset.py
+    - dataset
   train_model:
-    cmd: jupyter nbconvert train_model.ipynb --to python
+    cmd: python train_model.py
     deps:
-    - train_model.ipynb
-    outs:
+    - dataset
     - train_model.py
+    outs:
+    - models

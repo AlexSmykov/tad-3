@@ -1,0 +1,41 @@
+schema: '2.0'
+stages:
+  create_dataset:
+    cmd: python create_dataset.py
+    deps:
+    - path: Kaggle_ds
+      hash: md5
+      md5: 840fdb9a23c98313dde45246036c291f.dir
+      size: 452697142
+      nfiles: 5000
+    - path: create_dataset.py
+      hash: md5
+      md5: 3cc15d7da9072abdf4917a65e8180eec
+      size: 1749
+    params:
+      params.yaml:
+        with_augmentation: false
+    outs:
+    - path: dataset
+      hash: md5
+      md5: 64a61189609e10668ffd09eac746dc5b.dir
+      size: 65657137
+      nfiles: 2503
+  train_model:
+    cmd: python train_model.py
+    deps:
+    - path: dataset
+      hash: md5
+      md5: 64a61189609e10668ffd09eac746dc5b.dir
+      size: 65657137
+      nfiles: 2503
+    - path: train_model.py
+      hash: md5
+      md5: 6cc3b0b2e1dd4f788c84e3a73a26fade
+      size: 3757
+    outs:
+    - path: models
+      hash: md5
+      md5: 6c03883227d9cfcf18a286e227af2801.dir
+      size: 5825374
+      nfiles: 3
