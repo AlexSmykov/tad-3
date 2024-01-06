@@ -16,6 +16,15 @@ EPOCH_СOUNT = 5
 dvc_params = dvc.api.params_show()
 warnings.filterwarnings('ignore')
 
+models_parameters = [
+    [2, 50, 'relu', 16, 0.12],
+    [3, 150, 'lelu', 32, 0.15],
+    [4, 500, 'relu', 64, 0.2],
+]
+
+selected_model = dvc_params['model']
+selected_params = models_parameters[selected_model]
+
 def create_layers(hidden_layers_count, hidden_layers_sizes, activation_functions, filters_count, dropout_part):
     layers = []
 
@@ -40,14 +49,23 @@ def create_layers(hidden_layers_count, hidden_layers_sizes, activation_functions
     
     return layers
 
-models_parameters = [
-    [2, 50, 'relu', 16, 0.12],
-    [3, 150, 'lelu', 32, 0.15],
-    [4, 500, 'relu', 64, 0.2],
-]
-selected_model = dvc_params['model']
 
-selected_params = models_parameters[selected_model]
+print('Загрузка данных в модель')
+
+ds = tf.keras.utils.image_dataset_from_directory(
+    'dataset',
+    shuffle=True,
+    seed=69,
+    image_size=IMAGE_SIZE,
+    color_mode="grayscale",
+    batch_size=BATCH_SIZE)
+
+ds_size = len(ds)
+print(ds_size)
+
+train_ds = ds.take(int(ds_size * 0.6))
+validation_ds = ds.skip(int(ds_size * 0.6)).take(int(ds_size * 0.2))
+test_ds = ds.skip(int(ds_size * 0.8))
 
 def get_grid(model):
     grid = [[0, 0],
@@ -82,23 +100,6 @@ def save_model(model, path):
 
     model.save_weights(f'models/{path}/model')
 
-print('Загрузка данных в модель')
-
-ds = tf.keras.utils.image_dataset_from_directory(
-    'dataset',
-    shuffle=True,
-    seed=69,
-    image_size=IMAGE_SIZE,
-    color_mode="grayscale",
-    batch_size=BATCH_SIZE)
-
-ds_size = len(ds)
-print(ds_size)
-
-train_ds = ds.take(int(ds_size * 0.6))
-validation_ds = ds.skip(int(ds_size * 0.6)).take(int(ds_size * 0.2))
-test_ds = ds.skip(int(ds_size * 0.8))
-
 print('Обучение модели')
 print(f"Параметры: {selected_params}")
 
@@ -106,12 +107,10 @@ model = tf.keras.Sequential(create_layers(*selected_params))
 model.compile('Adagrad', "sparse_categorical_crossentropy", ['accuracy'])
 fit_result = model.fit(train_ds.cache(), validation_data=validation_ds.cache(), epochs=EPOCH_СOUNT)
 
-grid = get_grid(model, test_ds)
-save_model(model, selected_model)
-
-accuracy = get_prediction_accuracy(get_grid(model, test_ds))
+accuracy = get_prediction_accuracy(get_grid(model))
 print(f'Точность обученной модели на тестовой выборке: {accuracy}')
 
+save_model(model, selected_model)
 with open('result.json', 'w') as f:
     json.dump({f'model {selected_model}': accuracy, 
                f'with_augmentation': dvc_params['with_augmentation']}, f)
