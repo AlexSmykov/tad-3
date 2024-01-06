@@ -45,11 +45,11 @@ models_parameters = [
     [3, 150, 'lelu', 32, 0.15],
     [4, 500, 'relu', 64, 0.2],
 ]
-SELECTED_MODEL = 0
+selected_model = dvc_params['model']
 
-selected_params = models_parameters[SELECTED_MODEL]
+selected_params = models_parameters[selected_model]
 
-def get_grid(model, current_ds):
+def get_grid(model):
     grid = [[0, 0],
             [0, 0]]
 
@@ -107,11 +107,11 @@ model.compile('Adagrad', "sparse_categorical_crossentropy", ['accuracy'])
 fit_result = model.fit(train_ds.cache(), validation_data=validation_ds.cache(), epochs=EPOCH_СOUNT)
 
 grid = get_grid(model, test_ds)
-save_model(model, SELECTED_MODEL)
+save_model(model, selected_model)
 
 accuracy = get_prediction_accuracy(get_grid(model, test_ds))
 print(f'Точность обученной модели на тестовой выборке: {accuracy}')
 
 with open('result.json', 'w') as f:
-    json.dump({f'model {SELECTED_MODEL}': accuracy, 
+    json.dump({f'model {selected_model}': accuracy, 
                f'with_augmentation': dvc_params['with_augmentation']}, f)

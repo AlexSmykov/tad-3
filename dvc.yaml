@@ -13,5 +13,8 @@ stages:
     deps:
     - dataset
     - train_model.py
+    params:
+    - with_augmentation
+    - model
     outs:
     - models
