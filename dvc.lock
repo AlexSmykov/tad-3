@@ -26,20 +26,20 @@ stages:
     deps:
     - path: dataset
       hash: md5
-      md5: 64a61189609e10668ffd09eac746dc5b.dir
-      size: 65657137
-      nfiles: 2503
+      md5: 70f9b79fb8d941a2699df291f2ca8327.dir
+      size: 262864597
+      nfiles: 10012
     - path: train_model.py
       hash: md5
       md5: 67b5342540dda479c3d069a72fc795bb
       size: 3808
     params:
       params.yaml:
-        model: 0
-        with_augmentation: false
+        model: 2
+        with_augmentation: true
     outs:
     - path: models
       hash: md5
-      md5: 0f444c85e8b70cf27f4e1b317ca943bb.dir
-      size: 5825374
+      md5: 63599fa05c204bcfa3ebf344b22c1e83.dir
+      size: 237026928
       nfiles: 3
