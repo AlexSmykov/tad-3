@@ -35,11 +35,11 @@ stages:
       size: 3808
     params:
       params.yaml:
-        model: 0
+        model: 1
         with_augmentation: false
     outs:
     - path: models
       hash: md5
-      md5: 0f444c85e8b70cf27f4e1b317ca943bb.dir
-      size: 5825374
+      md5: 0595f3bbd2f3393edc9df2df2df5b2b5.dir
+      size: 35082735
       nfiles: 3
