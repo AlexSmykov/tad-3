@@ -51,5 +51,5 @@ for dir in os.listdir(kaggle_ds):
         else :
             for pic_path in os.listdir(f'{kaggle_ds}/{dir}/{dir_class}'):
                 processed_image = getProcessedImage(f'{kaggle_ds}/{dir}/{dir_class}/{pic_path}')
-                saveWithAugment(f'dataset/{VARIANTS[1]}/{i_1}', processed_image)
+                saveWithAugment(f'dataset/{VARIANTS[1]}/{i_2}', processed_image)
                 i_2 += 1
