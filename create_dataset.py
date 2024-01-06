@@ -14,11 +14,11 @@ def getProcessedImage(path):
     return cv2.resize(pic_gray, IMAGE_SIZE)
 
 def saveWithAugment(path, img):
-    cv2.imwrite(path, img)
+    cv2.imwrite(path + '.jpg', img)
     if (dvc_params['with_augmentation']):
-        cv2.imwrite(path + 'augmented_1', cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE))
-        cv2.imwrite(path + 'augmented_2', cv2.rotate(img, cv2.ROTATE_180))
-        cv2.imwrite(path + 'augmented_3', cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE))
+        cv2.imwrite(path + '_augmented-1.jpg', cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE))
+        cv2.imwrite(path + '_augmented-2.jpg', cv2.rotate(img, cv2.ROTATE_180))
+        cv2.imwrite(path + '_augmented-3.jpg', cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE))
 
 print('Предобрабокта данных')
 if (dvc_params['with_augmentation']):
@@ -45,11 +45,11 @@ for dir in os.listdir(kaggle_ds):
         if dir_class == "food":
             for pic_path in os.listdir(f'{kaggle_ds}/{dir}/{dir_class}'):
                 processed_image = getProcessedImage(f'{kaggle_ds}/{dir}/{dir_class}/{pic_path}')
-                saveWithAugment(f'dataset/{VARIANTS[0]}/{i_1}.jpg', processed_image)
+                saveWithAugment(f'dataset/{VARIANTS[0]}/{i_1}', processed_image)
                 i_1 += 1
 
         else :
             for pic_path in os.listdir(f'{kaggle_ds}/{dir}/{dir_class}'):
                 processed_image = getProcessedImage(f'{kaggle_ds}/{dir}/{dir_class}/{pic_path}')
-                saveWithAugment(f'dataset/{VARIANTS[1]}/{i_1}.jpg', processed_image)
+                saveWithAugment(f'dataset/{VARIANTS[1]}/{i_1}', processed_image)
                 i_2 += 1

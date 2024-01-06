@@ -1,2 +1,2 @@
-with_augmentation: False
+with_augmentation: True
 model: 0
